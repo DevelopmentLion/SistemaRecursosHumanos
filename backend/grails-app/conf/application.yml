@@ -1,0 +1,101 @@
+grails:
+  profile: web
+  codegen:
+    defaultPackage: rhumanos
+  gorm:
+    reactor:
+      # Whether to publish events on data access operations
+      events: false
+  controllers:
+    defaultScope: singleton
+  converters:
+    encode-quoted: false
+  urlmapping:
+    cache.maxsize: 1000
+  # Configuración del plugin grails-mail (envía los correos de incidencias)
+  mail:
+    enabled: false
+    host: localhost
+    port: 25
+    username: ''
+    password: ''
+    props:
+      mail.smtp.auth: false
+      mail.smtp.starttls.enable: false
+
+# ============================================================================
+# DataSource principal (MySQL). Equivalente al antiguo Config.groovy.
+# Los valores se pueden sobreescribir con variables de entorno:
+#   DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
+# ============================================================================
+dataSource:
+  pooled: true
+  dbCreate: update
+  driverClassName: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://${DB_HOST:172.16.1.202}:${DB_PORT:3306}/${DB_NAME:PruebaEver}?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowPublicKeyRetrieval=true
+  username: ${DB_USER:root}
+  password: C14R1741
+  # Grails 6 usa HikariCP como pool (las llaves maxActive/minIdle del pool
+  # anterior de Tomcat JDBC ya no aplican; se mapean a las de Hikari).
+  properties:
+    maximumPoolSize: 80
+    minimumIdle: 10
+    connectionTestQuery: SELECT 1
+    cachePrepStmts: true
+    prepStmtCacheSize: 250
+    prepStmtCacheSqlLimit: 2048
+    useServerPrepStmts: true
+
+environments:
+  development:
+    dataSource:
+      dbCreate: update
+      url: jdbc:mysql://${DB_HOST:172.16.1.202}:${DB_PORT:3306}/${DB_NAME:PruebaEver}?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowPublicKeyRetrieval=true
+      username: ${DB_USER:root}
+      password: C14R1741
+      properties:
+        maximumPoolSize: 80
+        minimumIdle: 10
+        connectionTestQuery: SELECT 1
+  test:
+    dataSource:
+      dbCreate: update
+      url: jdbc:mysql://127.0.0.1/secah2013?useUnicode=yes&characterEncoding=UTF-8&autoReconnect=true
+      username: test
+      password: testpw
+  production:
+    dataSource:
+      pooled: true
+      dbCreate: update
+      url: jdbc:mysql://172.16.1.202/secah2014?useUnicode=yes&characterEncoding=UTF-8&autoReconnect=true
+      username: root
+      password: C14R1741
+      properties:
+        maximumPoolSize: 80
+        minimumIdle: 10
+        connectionTestQuery: SELECT 1
+
+# NOTA: la configuración de caché de Hibernate de segundo nivel con EhCache
+# (hibernate.cache.use_second_level_cache / EhCacheProvider) ya no aplica en
+# Grails 6 / Hibernate 5.6 sin añadir dependencias extra. Si se requiere,
+# hay que agregar el proveedor de caché correspondiente.
+
+spring:
+  main:
+    banner-mode: "off"
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+server:
+  port: 8080
+  servlet:
+    session:
+      cookie:
+        secure: false
+
+# Directorio donde se guardan los archivos .CHK subidos (archivoRegistros).
+# Si no se define, se usa "payload" relativo al directorio de trabajo.
+rh:
+  payloadDir: payload

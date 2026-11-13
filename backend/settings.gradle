@@ -1,0 +1,14 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core/" }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    plugins {
+        id "org.grails.grails-web" version "6.2.3"
+        id "org.grails.grails-gsp" version "6.2.3"
+    }
+}
+
+rootProject.name='rhumanos-backend'
