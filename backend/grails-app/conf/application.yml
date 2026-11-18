@@ -22,6 +22,25 @@ grails:
     props:
       mail.smtp.auth: false
       mail.smtp.starttls.enable: false
+  plugin:
+    springsecurity:
+      security:
+        configType: Annotation
+      userLookup:
+        userDomainClassName: 'rhumanos.User'
+        authorityJoinClassName: 'rhumanos.UserRole'
+        authorityClassName: 'rhumanos.Role'
+      interceptUrlMap:
+        - pattern: '/rhumanos/**'
+          access: ['ROLE_RH_USUARIO', 'ROLE_RH_ADMIN']
+        - pattern: '/catalogosRh/**'
+          access: ['ROLE_RH_USUARIO', 'ROLE_RH_ADMIN']
+        - pattern: '/login/**'
+          access: ['permitAll']
+        - pattern: '/logout/**'
+          access: ['permitAll']
+        - pattern: '/**'
+          access: ['permitAll']
 
 spring:
   main:
