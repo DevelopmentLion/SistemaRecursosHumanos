@@ -3,8 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
 import { fileURLToPath, URL } from 'node:url'
 
-// URL del backend Grails (bootRun escucha en el puerto 8080)
-const backendUrl = process.env.VITE_BACKEND_URL || 'http://localhost:8080'
+// URL del backend Grails (bootRun escucha en el puerto 8081)
+const backendUrl = process.env.VITE_BACKEND_URL || 'http://localhost:8081'
 
 export default defineConfig({
   plugins: [

@@ -67,7 +67,7 @@ dependencies {
     implementation "org.codehaus.groovy:groovy-sql:${groovyVersion}"
     implementation "org.codehaus.groovy:groovy-datetime:${groovyVersion}"
     implementation "org.grails.plugins:spring-security-core:6.1.2"
-    implementation "org.grails.plugins:grails-mail:5.0.3"
+    implementation "org.grails.plugins:grails-mail:4.0.2"
 
     console "org.grails:grails-console"
 

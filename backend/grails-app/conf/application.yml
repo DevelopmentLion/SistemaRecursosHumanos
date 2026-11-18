@@ -26,6 +26,11 @@ grails:
     springsecurity:
       security:
         configType: Annotation
+      cors: true
+      password:
+        algorithm: 'SHA-256'
+        hash:
+          iterations: 1
       userLookup:
         userDomainClassName: 'rhumanos.User'
         authorityJoinClassName: 'rhumanos.UserRole'
@@ -41,6 +46,30 @@ grails:
           access: ['permitAll']
         - pattern: '/**'
           access: ['permitAll']
+      filterChain:
+        chainMap:
+          - pattern: '/**'
+            filters: 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter'
+
+dataSource:
+  pooled: true
+  driverClassName: com.mysql.cj.jdbc.Driver
+  username: root
+  password: C14R1741
+
+environments:
+  development:
+    dataSource:
+      dbCreate: update
+      url: jdbc:mysql://172.16.1.202:3306/PruebaEver?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowPublicKeyRetrieval=true
+      properties:
+        maximumPoolSize: 80
+        minimumIdle: 10
+        connectionTestQuery: SELECT 1
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
 
 spring:
   main:
@@ -58,7 +87,7 @@ spring:
       max-age: 3600
 
 server:
-  port: 8080
+  port: 8081
   servlet:
     session:
       cookie:
